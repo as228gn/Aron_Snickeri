@@ -1,0 +1,33 @@
+body{
+  background-color: #F9FAFB;
+}
+
+header{
+  margin-bottom: 20px;
+}
+
+#title{
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(21, 79, 253);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: bold;
+}
+#smallTitle{
+  color: rgb(21, 79, 253);
+  font-style: italic;
+  font-size: clamp(1.2rem, 4vw, 1.875rem);
+}
+
+a{
+  color: #4e5055;
+  text-decoration: none;
+}
+
+a:hover{
+  color: black;
+}
+
+.textStyle{
+  color: #4e5055;
+  line-height: 1.8;
+}

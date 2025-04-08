@@ -18,4 +18,16 @@ export class HomeController {
   index (req, res, next) {
     res.render('home/index')
   }
+
+  getContact (req, res, next){
+    res.render('home/contact')
+  }
+
+  postContact (req, res, next){
+    console.log('postContact')
+  }
+
+  getAbout (req, res, next){
+    res.render('home/about')
+  }
 }
