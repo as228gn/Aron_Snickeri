@@ -24,10 +24,6 @@ export class HomeController {
   }
 
   postContact (req, res, next){
-    console.log('postContact')
-  }
-
-  getAbout (req, res, next){
-    res.render('home/about')
+    console.log('Postcontact')
   }
 }

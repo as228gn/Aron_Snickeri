@@ -19,4 +19,8 @@ export class CustomerController {
     res.render('customer/carpentry')
   }
 
+  getKitchen (req, res, next) {
+    res.render('customer/kitchen')
+  }
+
 }
