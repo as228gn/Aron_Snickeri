@@ -4,6 +4,8 @@
  * @author Anna Ståhlberg
  */
 
+import nodemailer from 'nodemailer'
+
 /**
  * Encapsulates the Homecontroller.
  */
@@ -23,7 +25,36 @@ export class HomeController {
     res.render('home/contact')
   }
 
-  postContact (req, res, next){
-    console.log('Postcontact')
+  async postContact (req, res, next){
+    const transporter = nodemailer.createTransport({
+      service: 'Outlook365',
+      host: 'smtp.office365.com',
+      port: 587,
+      tls: {
+        ciphers:'SSLv3',
+        rejectUnauthorized: false,
+      },
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD
+      },
+    })
+  
+    const mailOptions = {
+      from: process.env.MAIL_USER,
+      to: process.env.MAIL_USER,
+      replyTo: req.body.email,
+      subject: `Ny kontaktförfrågan från ${req.body.name}`,
+      text: `
+  Namn: ${req.body.name}
+  Telefon: ${req.body.telephone}
+  E-post: ${req.body.email}
+  
+  Meddelande:
+  ${req.body.question}
+      `
+    }
+  
+    await transporter.sendMail(mailOptions)
   }
 }

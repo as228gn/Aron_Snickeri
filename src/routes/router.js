@@ -20,6 +20,7 @@ router.use('/company', companyRouter)
 
 // Catch 404 (ALWAYS keep this as the last route).
 router.use('*', (req, res, next) => {
+  console.log('404 Not Found:', req.originalUrl)
   const statusCode = 404
   const error = new Error(http.STATUS_CODES[statusCode])
   error.status = statusCode
