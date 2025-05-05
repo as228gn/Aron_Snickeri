@@ -5,6 +5,7 @@
  */
 
 import nodemailer from 'nodemailer'
+import { client, urlFor} from '../config/sanityClient.js'
 
 /**
  * Encapsulates the Homecontroller.
@@ -17,21 +18,30 @@ export class HomeController {
    * @param {object} res - Express response object.
    * @param {Function} next - Express next middleware function.
    */
-  index (req, res, next) {
-    res.render('home/index')
+  async index(req, res, next) {
+   
+    const news = await client.fetch('*[_type == "news"]')
+    //console.log(JSON.stringify(news, null, 2))
+    const viewData = news.map(item => ({
+      title: item.title,
+      description: item.description,
+      imageUrl: urlFor(item.image).url()
+    }))
+    console.log('Viewdata:', JSON.stringify(viewData, null, 2))
+    res.render('home/index', {viewData})
   }
 
-  getContact (req, res, next){
+  getContact(req, res, next) {
     res.render('home/contact')
   }
 
-  async postContact (req, res, next){
+  async postContact(req, res, next) {
     const transporter = nodemailer.createTransport({
       service: 'Outlook365',
       host: 'smtp.office365.com',
       port: 587,
       tls: {
-        ciphers:'SSLv3',
+        ciphers: 'SSLv3',
         rejectUnauthorized: false,
       },
       auth: {
@@ -39,7 +49,7 @@ export class HomeController {
         pass: process.env.MAIL_PASSWORD
       },
     })
-  
+
     const mailOptions = {
       from: process.env.MAIL_USER,
       to: process.env.MAIL_USER,
@@ -54,7 +64,7 @@ export class HomeController {
   ${req.body.question}
       `
     }
-  
+
     await transporter.sendMail(mailOptions)
   }
 }
