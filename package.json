@@ -21,7 +21,7 @@
     "express": "^4.21.1",
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.18.1",
-    "nodemailer": "^6.10.1"
+    "nodemailer": "^7.0.3"
   },
   "devDependencies": {
     "@lnu/eslint-config": "^1.1.10",

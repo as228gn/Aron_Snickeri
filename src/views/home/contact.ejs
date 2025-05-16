@@ -1,24 +1,25 @@
 <div class="container">
   <h3 class="textStyle">Tveka inte att kontakta oss om du undrar över något</h3>
   <div class="mx-auto" style="max-width: 600px;">
-<form method="post" , action="./contact">
-  <div class="mb-3">
-    <label for="name" class="form-label">Namn</label>
-    <input type="name" class="form-control" name="name" placeholder="Ditt namn" re>
+    <form method="post" , action="./contact">
+      <div class="mb-3">
+        <label for="name" class="form-label">Namn</label>
+        <input type="name" class="form-control" name="name" placeholder="Ditt namn" re>
+      </div>
+      <div class="mb-3">
+        <label for="telephone" class="form-label">Telefon</label>
+        <input type="number" class="form-control" name="telephone" placeholder="Ditt telefonnummer" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">E-post</label>
+        <input type="email" class="form-control" name="email" placeholder="Din e-post">
+      </div>
+      <div class="mb-3">
+        <label for="question" class="form-label">Ärende</label>
+        <textarea class="form-control" name="question" rows="3" required></textarea>
+      </div>
+      <button class="btn btn-secondary" type="submit">Skicka</button>
+    </form>
+    <div class="gdprInfo">Genom att skicka in formuläret godkänner du att vi behandlar dina personuppgifter i syfte att kunna besvara ditt ärende.</div>
   </div>
-  <div class="mb-3">
-    <label for="telephone" class="form-label">Telefon</label>
-    <input type="number" class="form-control" name="telephone" placeholder="Ditt telefonnummer" required>
-  </div>
-  <div class="mb-3">
-    <label for="email" class="form-label">E-post</label>
-    <input type="email" class="form-control" name="email" placeholder="Din e-post">
-  </div>
-  <div class="mb-3">
-    <label for="question" class="form-label">Förfrågan</label>
-    <textarea class="form-control" name="question" rows="3" required></textarea>
-  </div>
-  <button class="btn btn-secondary" type="submit">Skicka</button>
-</form>
-</div>
 </div>

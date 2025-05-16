@@ -1,28 +1,24 @@
 <div class="container text-center">
   <div class="row">
-    <div class="col-6">
-      <div class="position-sticky" style="top: 60px; height: 100vh; overflow-y: auto;">
+    <div class="col-md-6">
+      <div class="startInfo">
         <h1 class="textStyle">Aron Snickeri</h1>
-        <div class="textStyle">Aron Snickeri är det lilla Specialsnickeriet med den stora erfarenheten och kunnandet.
-          Vi tillverkar det som kunden vill ha, efter deras egna önskemål. Detta gör vi till både företag och privata kunder, till skäliga priser.
-          Våran tanke är att kunna leverera unika produkter till rimliga priser. Kunden skall kunna påverka slutprodukten i samspråk med oss innan tillverkning.
-          Det behöver inte kosta så mycket mer att få en unik produkt som du själv har varit med att bestämt utförandet på. Vår specialitet är unika inredningar och möbler till privat och offentlig miljö.
-          Vi är också återförsäljare av köksluckor genom <a id="novaflexLink" href="https://www.novaflex.se/kok/">Novaflex</a> kök.
+        <div class="textStyle">
+          <%= viewData.startInfo %>
         </div>
+        <div class="textStyle">Vi är också återförsäljare av köksluckor genom <a class="pageLink" href="https://www.novaflex.se/kok/">Novaflex</a> kök.</div>
       </div>
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
       <h1 class="textStyle">Nyheter</h1>
-      <% viewData.forEach(item => { %>
+      <% viewData.newsInfo.forEach(item => { %>
         <div class="news-item">
-          <!-- Dynamisk bild -->
-          <img class="firstImage" src="<%= item.imageUrl %>" alt="<%= item.title %>">
-          
-          <!-- Dynamisk text -->
+          <img class="firstImage" src="<%= item.imageUrl %>" alt="<%= item.description %>">
           <div class="textStyle">
             <%= item.description %>
           </div>
         </div>
-      <% }); %>
+      <% }) %>
+      <a class="pageLink" href="./news">Visa alla Nyheter</a>
     </div>
   </div>

@@ -7,7 +7,7 @@
 import express from 'express'
 import { CompanyController } from '../controllers/CompanyController.js'
 
- export const router = express.Router()
+export const router = express.Router()
 
 const controller = new CompanyController()
 

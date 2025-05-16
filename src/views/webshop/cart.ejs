@@ -1,0 +1,37 @@
+<div class="container">
+  <h1 class="textStyle">Varukorg</h1>
+  <% if (viewData.length === 0) { %>
+    <p>Varukorgen är tom.</p>
+  <% } else { %>
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Bild</th>
+          <th>Produkt</th>
+          <th>Pris</th>
+          <th>Antal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% viewData.forEach(item => { %>
+          <tr>
+            <td style="width: 100px;">
+              <img src="<%= item.imageUrl %>" alt="<%= item.title %>" class="img-fluid rounded" />
+            </td>
+            <td><%= item.title %></td>
+            <td><%= item.price %></td>
+            <td><form action="/webshop/cart/update" method="POST" class="d-flex align-items-center gap-1">
+              <input type="hidden" name="variantId" value="<%= item.variantId %>">
+
+              <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm">−</button>
+              <span class="px-2"><%= item.quantity %></span>
+              <button type="submit" name="action" value="increase" class="btn btn-outline-secondary btn-sm">+</button>
+            </form></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <a href="<%= checkoutUrl %>" class="btn btn-primary">Gå till kassan</a>
+    <% } %>
+    <a class="btn btn-primary" href="./webshop/shop">Fortsätt shoppa</a>
+</div>
