@@ -86,10 +86,45 @@ export class HomeController {
   }
 
   async postContact(req, res, next) {
-    console.log(req.body.name)
-    console.log(req.body.telephone)
-    console.log(req.body.email)
-    console.log(req.body.question)
+
+    const name = req.body.name
+    const telephone = req.body.telephone
+    const email = req.body.email
+    const question = req.body.question
+
+const testAccount = await nodemailer.createTestAccount()
+
+    // Skapa transporter med testkontots inloggning
+    const transporter = nodemailer.createTransport({
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+      tls: {
+    rejectUnauthorized: false, // ← Lägg till detta
+  },
+    })
+
+    // Skapa meddelandet
+    const mailOptions = {
+      from: `"${name}" <${email}>`,
+      to: "greblats_@hotmail.com", // Ändra till en testmottagare
+      subject: "Kontaktformulär",
+      text: `"${question}" <${telephone}>`,
+      html: `<p><strong>Från:</strong> ${name} (${email})</p><p><strong>Meddelande:</strong></p><p>${question}</p><p><strong>Telefonnummer:</strong></p><p>${telephone}</p>`,
+    }
+
+    // Skicka meddelandet
+    const info = await transporter.sendMail(mailOptions)
+
+    // Logga och skicka svar
+    console.log("Meddelande skickat: %s", info.messageId)
+    console.log("Förhandsgranska:", nodemailer.getTestMessageUrl(info))
+
+
     res.render('home/postForm')
   }
 }

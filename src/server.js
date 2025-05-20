@@ -49,12 +49,9 @@ app.use((req, res, next) => {
 })
 
 app.use((req, res, next) => {
-  if (req.session.flash) {
-    res.locals.flash = req.session.flash
-    delete req.session.flash
-  }
   // Pass the base URL to the views.
   res.locals.baseURL = baseURL
+  res.locals.totalQuantity = req.session.totalQuantity || 0
 
   next()
 })

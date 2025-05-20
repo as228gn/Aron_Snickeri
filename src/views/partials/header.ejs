@@ -7,13 +7,19 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <div class="navbar-nav">
+        <div class="navbar-nav menu-wrapper">
           <a class="nav-link, headerLink" href="./">Hem</a>
           <a class="nav-link, headerLink" href="./customer/carpentry">Snickerier</a>
           <a class="nav-link, headerLink" href="./customer/kitchen">Kök</a>
           <a class="nav-link, headerLink" href="./contact">Kontakt</a>
           <a class="nav-link, headerLink" href="./company/company">Företag</a>
           <a class="nav-link, headerLink" href="./webshop/shop">Webshop</a>
+            <a href="./webshop/cart" class="btn btn-outline-primary position-relative cart-button">
+              <i class="bi bi-cart-fill"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                <%= totalQuantity %>
+              </span>
+            </a>
         </div>
       </div>
     </div>

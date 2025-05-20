@@ -1,21 +1,31 @@
 <div class="container">
   <h1 class="textStyle">Webshop</h1>
-  <h2 class="textStyle">Under konstruktion</h2>
-</div>
-<div class="container">
-  <a href="/webshop/cart">Gå till varukorg</a>
-  <% for (let i = 0; i < viewData.length; i += 2) { %>
+  <div class="d-flex justify-content-end mb-3">
+    <div class="d-block d-md-none d-flex justify-content-end align-items-center p-3">
+      <a href="./webshop/cart" class="btn btn-outline-primary position-relative">
+        <i class="bi bi-cart-fill"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+          <%= totalQuantity %>
+        </span>
+      </a>
+    </div>
+  </div>
+  <% for (let i=0; i < viewData.length; i +=2) { %>
     <div class="row mb-4">
       <div class="col-12 col-md-6 mb-3">
-        <div class="card">
+        <div class="card h-100 d-flex flex-column">
           <img class="card-img-top" src="<%= viewData[i].imageUrl %>" alt="<%= viewData[i].title %>">
-          <div class="card-body">
-            <h5 class="card-title"><%= viewData[i].title %></h5>
-            <div class="card-hover-text-hidden">
-              <p class="card-text card-description"><%= viewData[i].description %></p>
-            </div>            
-            <p class="card-text fw-bold"><%= viewData[i].price %> kr</p>
-            <form method="POST" action="/webshop/addToCart">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">
+              <%= viewData[i].title %>
+            </h5>
+            <p class="card-text card-description">
+              <%= viewData[i].description %>
+            </p>
+            <p class="card-text fw-bold mt-auto">
+              <%= viewData[i].price %> kr
+            </p>
+            <form method="POST" action="./webshop/addToCart">
               <input type="hidden" name="variantId" value="<%= viewData[i].variantId %>">
               <button type="submit" class="btn btn-primary">Lägg i varukorg</button>
             </form>
@@ -25,24 +35,26 @@
 
       <% if (viewData[i + 1]) { %>
         <div class="col-12 col-md-6 mb-3">
-          <div class="card">
+          <div class="card h-100 d-flex flex-column">
             <img class="card-img-top" src="<%= viewData[i + 1].imageUrl %>" alt="<%= viewData[i + 1].title %>">
-            <div class="card-body">
-              <h5 class="card-title"><%= viewData[i + 1].title %></h5>
-              <div class="card-hover-text-hidden">
-                <p class="card-text card-description"><%= viewData[i + 1].description %></p>
-              </div>
-              <p class="card-text fw-bold"><%= viewData[i + 1].price %> kr</p>
-              <form method="POST" action="/webshop/addToCart">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">
+                <%= viewData[i + 1].title %>
+              </h5>
+              <p class="card-text card-description">
+                <%= viewData[i + 1].description %>
+              </p>
+              <p class="card-text fw-bold mt-auto">
+                <%= viewData[i + 1].price %> kr
+              </p>
+              <form method="POST" action="./webshop/addToCart">
                 <input type="hidden" name="variantId" value="<%= viewData[i + 1].variantId %>">
                 <button type="submit" class="btn btn-primary">Lägg i varukorg</button>
               </form>
             </div>
           </div>
         </div>
-      <% } %>
+        <% } %>
     </div>
-  <% } %>
+    <% } %>
 </div>
-
-

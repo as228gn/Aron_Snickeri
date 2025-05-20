@@ -97,18 +97,15 @@ footer {
 }
 
 .card {
-  max-width: 450px;
+  max-width: 350px;
   margin: 0 auto;
 }
 
-.card-description {
-  display: none;
-}
+.cart-button {
+  height: auto;
+ }
 
-.card:hover .card-description {
-  display: block;
-}
+ .menu-wrapper {
+  align-items: center;
+ }
 
-.card-hover-text-hidden {
-  min-height: 60px; /* Reservutrymme om du vill undvika att korten "hoppar" */
-}

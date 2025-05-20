@@ -1,8 +1,30 @@
 <div class="container">
   <h1 class="textStyle">Varukorg</h1>
   <% if (viewData.length === 0) { %>
-    <p>Varukorgen är tom.</p>
+      <table class="table table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Bild</th>
+            <th>Produkt</th>
+            <th>Pris</th>
+            <th>Antal</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>Varukorgen är tom</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+        </tbody>
+      </table>
   <% } else { %>
+    <div class="d-flex justify-content-end mb-3">
+      <form method="POST" action="./webshop/cart/goToCheckout">
+        <button type="submit" class="btn btn-primary">Gå till kassan</button>
+      </form>
+    </div>
     <table class="table table-bordered align-middle">
       <thead class="table-light">
         <tr>
@@ -20,8 +42,10 @@
             </td>
             <td><%= item.title %></td>
             <td><%= item.price %></td>
-            <td><form action="/webshop/cart/update" method="POST" class="d-flex align-items-center gap-1">
+            <td><form action="./webshop/cart/update" method="POST" class="d-flex align-items-center gap-1">
               <input type="hidden" name="variantId" value="<%= item.variantId %>">
+              <input type="hidden" name="lineId" value="<%= item.lineId %>">
+              <input type="hidden" name="quantity" value="<%= item.quantity %>">
 
               <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm">−</button>
               <span class="px-2"><%= item.quantity %></span>
@@ -31,7 +55,6 @@
         <% }) %>
       </tbody>
     </table>
-    <a href="<%= checkoutUrl %>" class="btn btn-primary">Gå till kassan</a>
     <% } %>
     <a class="btn btn-primary" href="./webshop/shop">Fortsätt shoppa</a>
 </div>
