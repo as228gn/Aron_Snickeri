@@ -91,8 +91,7 @@ export class HomeController {
     const telephone = req.body.telephone
     const email = req.body.email
     const question = req.body.question
-
-const testAccount = await nodemailer.createTestAccount()
+    const testAccount = await nodemailer.createTestAccount()
 
     // Skapa transporter med testkontots inloggning
     const transporter = nodemailer.createTransport({
@@ -123,7 +122,6 @@ const testAccount = await nodemailer.createTestAccount()
     // Logga och skicka svar
     console.log("Meddelande skickat: %s", info.messageId)
     console.log("Förhandsgranska:", nodemailer.getTestMessageUrl(info))
-
 
     res.render('home/postForm')
   }
