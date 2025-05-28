@@ -35,7 +35,7 @@ app.use(expressLayouts)
 app.use(express.urlencoded({ extended: false }))
 
 // Serve static files.
-app.use(express.static(join(directoryFullName, '..', 'public')))
+app.use(express.static(join(directoryFullName, 'public')))
 
 // Setup and use session middleware (https://github.com/expressjs/session)
 if (process.env.NODE_ENV === 'production') {
@@ -43,6 +43,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 app.use(session(sessionOptions))
 // Middleware to be executed before the routes.
+
+app.use((req, res, next) => {
+  // Prevent browser from caching pages, especially for session-sensitive content.
+  res.set('Cache-Control', 'no-store')
+  next()
+})
+
 app.use((req, res, next) => {
   res.locals.session = req.session
   next()

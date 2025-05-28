@@ -21,9 +21,7 @@ export class CompanyController {
   async getCompany (req, res, next) {
     try {
       const company = await client.fetch('*[_type == "company"]')
-      //console.log('Company:', JSON.stringify(company, null, 2))
       const viewData = this.formatCompanyData(company)
-      //console.log('Viewdata:', JSON.stringify(viewData, null, 2))
       res.render('company/company', { viewData })
     } catch (error) {
       console.error('Error fetching company data:', error)

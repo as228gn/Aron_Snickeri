@@ -20,12 +20,10 @@ export class CustomerController {
   async getCarpentry(req, res, next) {
     try {
       const carpentry = await client.fetch('*[_type == "carpentry"]')
-      //console.log(JSON.stringify(news, null, 2))
       const viewData = carpentry.map(item => ({
         description: item.description,
         imageUrl: urlFor(item.image).url()
       }))
-      //console.log('Viewdata:', JSON.stringify(viewData, null, 2))
       res.render('customer/carpentry', { viewData })
     } catch (error) {
       console.error("Error fetching carpentry data:", error)

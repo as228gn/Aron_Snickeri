@@ -6,6 +6,7 @@
 
 import { client, urlFor } from '../config/sanityClient.js'
 import nodemailer from 'nodemailer'
+import he from 'he'
 
 /**
  * Encapsulates the Homecontroller.
@@ -31,7 +32,7 @@ export class HomeController {
       start.map(item => {
         startInfo = item.description;
       })
-  
+
       news.forEach(item => {
         const newsObject = {
           description: item.description,
@@ -45,7 +46,7 @@ export class HomeController {
         newsInfo
       }
       res.render('home/index', { viewData })
-  
+
     } catch (error) {
       next(error)
     }
@@ -62,7 +63,7 @@ export class HomeController {
   async getNewsPage(req, res, next) {
     try {
       const news = await client.fetch('*[_type == "news"]')
-  
+
       const viewData = news.map(item => ({
         description: item.description,
         imageUrl: urlFor(item.image).url()
@@ -85,44 +86,61 @@ export class HomeController {
     res.render('home/contact')
   }
 
+  /**
+   * Hanterar POST-begäran från kontaktformuläret och skickar ett e-postmeddelande via SMTP.
+   *
+   * @param {import('express').Request} req - Express-begäran som innehåller formulärdata i `req.body`.
+   * @param {import('express').Response} res - Express-svar som renderar en bekräftelsesida vid lyckad skickning.
+   * @param {import('express').NextFunction} next - Nästa middlewarefunktion i Express (används för felhantering).
+   * @throws {Error} Om det uppstår ett fel vid skapande av testkonto eller vid försök att skicka e-post.
+   */
   async postContact(req, res, next) {
+    try {
 
-    const name = req.body.name
-    const telephone = req.body.telephone
-    const email = req.body.email
-    const question = req.body.question
-    const testAccount = await nodemailer.createTestAccount()
+      const name = he.encode(req.body.name)
+      const telephone = he.encode(req.body.telephone)
+      const email = he.encode(req.body.email)
+      const question = he.encode(req.body.question)
+      const testAccount = await nodemailer.createTestAccount()
 
-    // Skapa transporter med testkontots inloggning
-    const transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-      tls: {
-    rejectUnauthorized: false, // ← Lägg till detta
-  },
-    })
+      // Skapa transporter med testkontots inloggning
+      const transporter = nodemailer.createTransport({
+        host: "smtp.ethereal.email",
+        port: 587,
+        secure: false,
+        auth: {
+          user: testAccount.user,
+          pass: testAccount.pass,
+        },
+        tls: {
+          rejectUnauthorized: false, // ← Lägg till detta
+        },
+      })
 
-    // Skapa meddelandet
-    const mailOptions = {
-      from: `"${name}" <${email}>`,
-      to: "greblats_@hotmail.com", // Ändra till en testmottagare
-      subject: "Kontaktformulär",
-      text: `"${question}" <${telephone}>`,
-      html: `<p><strong>Från:</strong> ${name} (${email})</p><p><strong>Meddelande:</strong></p><p>${question}</p><p><strong>Telefonnummer:</strong></p><p>${telephone}</p>`,
+      // Skapa meddelandet
+      const mailOptions = {
+        from: `"${name}" <${email}>`,
+        to: "greblats_@hotmail.com", // Ändra till en testmottagare
+        subject: "Kontaktformulär",
+        text: `"${question}" <${telephone}>`,
+        html: `<p><strong>Från:</strong> ${name} (${email})</p>
+               <p><strong>Meddelande:</strong></p>
+               <p>${question}</p>
+               <p><strong>Telefonnummer:</strong></p>
+               <p>${telephone}</p>`,
+      }
+
+      // Skicka meddelandet
+      const info = await transporter.sendMail(mailOptions)
+
+      // Logga och skicka svar
+      console.log("Meddelande skickat: %s", info.messageId)
+      console.log("Förhandsgranska:", nodemailer.getTestMessageUrl(info))
+
+      res.render('home/postForm')
+    } catch (error) {
+      console.error('Fel vid skickande av kontaktmeddelande:', error)
+      next(error)
     }
-
-    // Skicka meddelandet
-    const info = await transporter.sendMail(mailOptions)
-
-    // Logga och skicka svar
-    console.log("Meddelande skickat: %s", info.messageId)
-    console.log("Förhandsgranska:", nodemailer.getTestMessageUrl(info))
-
-    res.render('home/postForm')
   }
 }
